@@ -9,6 +9,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "surnameServlet", value = "/surname")
 public class ServletSurname extends HttpServlet {
+    private String message;
+
+    public void init() {
+        message = "Serheiev";
+    }
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -16,8 +21,11 @@ public class ServletSurname extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         out.println("<html><head><title>My Surname</title></head><body>");
-        out.println("<h1>Serheiev</h1>");
+        out.println("<h1>"+message+"</h1>");
         out.println("<a href=\"index.jsp\">Back</a>");
         out.println("</body></html>");
+    }
+
+    public void destroy() {
     }
 }

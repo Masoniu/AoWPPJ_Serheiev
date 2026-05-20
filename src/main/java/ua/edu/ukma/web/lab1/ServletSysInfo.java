@@ -11,6 +11,17 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "sysInfoServlet", value = "/sysinfo")
 public class ServletSysInfo extends HttpServlet {
+    private String osName;
+    private String osArch;
+    private String osVersion;
+
+    public void init() {
+        OperatingSystemMXBean osBean = ManagementFactory.getOperatingSystemMXBean();
+        osName = osBean.getName();
+        osArch = osBean.getArch();
+        osVersion = osBean.getVersion();
+    }
+
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -18,13 +29,9 @@ public class ServletSysInfo extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         Runtime runtime = Runtime.getRuntime();
-        OperatingSystemMXBean osBean = ManagementFactory.getOperatingSystemMXBean();
         long totalMemMB = runtime.totalMemory() / (1024 * 1024);
         long freeMemMB = runtime.freeMemory() / (1024 * 1024);
         int processors = runtime.availableProcessors();
-        String osName = osBean.getName();
-        String osArch = osBean.getArch();
-        String osVersion = osBean.getVersion();
         out.println("<html><head><title>System Info</title></head><body>");
         out.println("<h2>Server Details:</h2>");
         out.println("<ul>");
@@ -35,5 +42,8 @@ public class ServletSysInfo extends HttpServlet {
         out.println("</ul>");
         out.println("<br/><a href=\"index.jsp\">Back</a>");
         out.println("</body></html>");
+    }
+
+    public void destroy() {
     }
 }
