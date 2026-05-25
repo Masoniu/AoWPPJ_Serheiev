@@ -15,15 +15,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-// Ціль називається "aggregate" і запускається на фазі компіляції
 @Mojo(name = "aggregate", defaultPhase = LifecyclePhase.COMPILE)
 public class Aggregate extends AbstractMojo {
 
-    // Автоматично бере шлях до папки з вихідним кодом проєкту, де запускається плагін
     @Parameter(defaultValue = "${project.build.sourceDirectory}", readonly = true)
     private File sourceDirectory;
-
-    // Шлях, куди буде збережено результат (у папку target)
     @Parameter(defaultValue = "${project.build.directory}/aggregated-sources.txt")
     private File outputFile;
 
@@ -40,7 +36,7 @@ public class Aggregate extends AbstractMojo {
             }
             outputFile.createNewFile();
 
-            getLog().info("Збираємо Java файли у: " + outputFile.getAbsolutePath());
+            getLog().info("Aggregating Java files in: " + outputFile.getAbsolutePath());
 
             try (Stream<Path> paths = Files.walk(sourceDirectory.toPath())) {
                 List<Path> javaFiles = paths
@@ -49,14 +45,14 @@ public class Aggregate extends AbstractMojo {
                         .collect(Collectors.toList());
 
                 for (Path javaFile : javaFiles) {
-                    String content = "\n\n// --- File: " + javaFile.getFileName() + " ---\n";
+                    String content = "\n\nFile: " + javaFile.getFileName() + "\n";
                     content += new String(Files.readAllBytes(javaFile));
                     Files.write(outputFile.toPath(), content.getBytes(), StandardOpenOption.APPEND);
                 }
-                getLog().info("Успішно зібрано файлів: " + javaFiles.size());
+                getLog().info("Successfully aggregated files: " + javaFiles.size());
             }
         } catch (IOException e) {
-            throw new MojoExecutionException("Помилка під час збору файлів", e);
+            throw new MojoExecutionException("Error during aggregation", e);
         }
     }
 }

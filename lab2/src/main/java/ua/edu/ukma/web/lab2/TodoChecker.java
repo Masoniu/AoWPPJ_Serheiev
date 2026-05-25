@@ -25,7 +25,7 @@ public class TodoChecker extends AbstractMojo {
             return;
         }
 
-        getLog().info("Скануємо код на наявність TODO...");
+        getLog().info("Scanning project for TODO...");
         int todoCount = 0;
 
         try (Stream<Path> paths = Files.walk(sourceDirectory.toPath())) {
@@ -38,20 +38,20 @@ public class TodoChecker extends AbstractMojo {
                 List<String> lines = Files.readAllLines(javaFile);
                 for (int i = 0; i < lines.size(); i++) {
                     if (lines.get(i).contains("TODO")) {
-                        getLog().warn("Знайдено TODO у " + javaFile.getFileName() + " на рядку " + (i + 1));
+                        getLog().warn("Found TODO in " + javaFile.getFileName() + " on row " + (i + 1));
                         todoCount++;
                     }
                 }
             }
 
             if (todoCount > 0) {
-                getLog().warn("Всього знайдено TODO: " + todoCount + ". Будь ласка, виправте їх.");
+                getLog().warn("TODO found: " + todoCount + ". Please, fix it.");
             } else {
-                getLog().info("Код чистий! TODO не знайдено.");
+                getLog().info("Clean, TODO was not found.");
             }
 
         } catch (IOException e) {
-            throw new MojoExecutionException("Помилка під час сканування", e);
+            throw new MojoExecutionException("Error during scanning", e);
         }
     }
 }
