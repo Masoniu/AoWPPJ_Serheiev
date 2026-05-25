@@ -11,6 +11,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet(name = "sysInfoServlet", value = "/sysinfo")
 public class ServletSysInfo extends HttpServlet {
+
+    // TODO: Remove this empty init() method
     public void init() {
     }
 
@@ -22,12 +24,16 @@ public class ServletSysInfo extends HttpServlet {
 
         Runtime runtime = Runtime.getRuntime();
         OperatingSystemMXBean osBean = ManagementFactory.getOperatingSystemMXBean();
+
+        // TODO: Convert memory calculation to Gigabytes (GB) for better readability
         long totalMemMB = runtime.totalMemory() / (1024 * 1024);
         long freeMemMB = runtime.freeMemory() / (1024 * 1024);
         int processors = runtime.availableProcessors();
+
         String osName = osBean.getName();
         String osArch = osBean.getArch();
         String osVersion = osBean.getVersion();
+
         out.println("<html><head><title>System Info</title></head><body>");
         out.println("<h2>Server Details:</h2>");
         out.println("<ul>");

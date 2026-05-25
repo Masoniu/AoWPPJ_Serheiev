@@ -21,7 +21,12 @@ public class ServletSurname extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         out.println("<html><head><title>My Surname</title></head><body>");
+
+        // TODO: Change the text color of the heading (h1) to blue using CSS
         out.println("<h1>"+message+"</h1>");
+
+        // TODO: Add a new paragraph (p tag) with your group name here
+
         out.println("<a href=\"index.jsp\">Back</a>");
         out.println("</body></html>");
     }
