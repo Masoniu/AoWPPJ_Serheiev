@@ -3,11 +3,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-<parent>
-    <groupId>ua.edu.ukma</groupId>
-    <artifactId>labs-parent</artifactId>
-    <version>1.0-SNAPSHOT</version>
-</parent>
+    <parent>
+        <groupId>ua.edu.ukma</groupId>
+        <artifactId>labs-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
 
     <groupId>org.example</groupId>
     <artifactId>AoWPPJ_Serheiev</artifactId>
@@ -49,6 +49,12 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.4.0</version>
+            </plugin>
+
+            <plugin>
+                <groupId>ua.edu.ukma</groupId>
+                <artifactId>my-custom-plugins</artifactId>
+                <version>1.0-SNAPSHOT</version>
             </plugin>
         </plugins>
     </build>
